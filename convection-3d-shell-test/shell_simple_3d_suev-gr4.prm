@@ -1,0 +1,128 @@
+# A simple setup for convection in a 3d shell. See the
+# manual for more information.
+
+
+set Dimension                              = 3
+set Use years in output instead of seconds = true
+set End time                               = 3e10
+set Output directory                       = output-shell_simple_3d-suev-gr4
+
+set Use conduction timestep = true
+set Maximum time step = 1e7
+set Resume computation = true
+
+subsection Solver parameters
+  subsection Stokes solver parameters
+    set Number of cheap Stokes solver steps    = 200  
+  end
+end
+
+subsection Discretization
+  #set Use discontinuous temperature discretization = true
+  subsection Stabilization parameters
+    # set entropy viscosity stabilization parameters to zero to avoid
+    # numerical diffusion owing to lowish resoltion
+    #set cR = 0.0
+    #set beta = 0.0
+    set Use SUPG = true
+  end
+end
+
+subsection Material model
+  set Model name = simple
+
+  subsection Simple model
+    set Thermal expansion coefficient = 4e-5
+    set Viscosity                     = 1e22
+  end
+end
+
+
+subsection Geometry model
+  set Model name = spherical shell
+
+  subsection Spherical shell
+    set Inner radius  = 3481000
+    set Outer radius  = 6336000
+  end
+end
+
+
+subsection Boundary velocity model
+  set Zero velocity boundary indicators       = bottom
+  set Tangential velocity boundary indicators = top
+end
+
+
+subsection Boundary temperature model
+  set Fixed temperature boundary indicators   = top, bottom
+  set List of model names = spherical constant
+
+  subsection Spherical constant
+    set Inner temperature = 1973
+    set Outer temperature = 973
+  end
+end
+
+
+subsection Initial temperature model
+  set Model name = harmonic perturbation
+  #subsection Function
+  #  set Function expression = 1.473e3
+  #end
+  subsection Harmonic perturbation
+    set Lateral wave number one = 4
+    set Lateral wave number two = 4
+    set Magnitude = 10.0
+    set Reference temperature = 1473.0
+  end
+end
+
+
+subsection Gravity model
+  set Model name = ascii data
+end
+
+
+subsection Mesh refinement
+  set Initial global refinement          = 4
+  set Initial adaptive refinement        = 0
+  set Strategy                           = thermal energy density, artificial viscosity
+  set Time steps between mesh refinement = 15
+  set Additional refinement times = 2.0e10
+  subsection Artificial viscosity
+    set Temperature scaling factor = 1.0
+  end
+#  subsection Minimum refinement function
+#     set Coordinate system = depth
+#     set Variable names = d
+#     set Function constants =
+#     set Function expression = if( d<200000 or d>2655000, 6, 4 )
+#  end
+end
+
+
+subsection Postprocess
+  set List of postprocessors = visualization, velocity statistics, temperature statistics, heat flux statistics, depth average
+
+  subsection Visualization
+    set List of output variables = artificial viscosity
+    set Interpolate output = true
+    set Write in background thread = true
+    set Output format                 = vtu
+    set Time between graphical output = 5e6
+    set Number of grouped files       = 0
+  end
+
+  subsection Depth average
+    set List of output variables = temperature, velocity magnitude
+    set Number of zones = 22
+    set Time between graphical output = 5e6
+    set Output format                 = txt
+  end
+end
+
+
+subsection Checkpointing
+  set Steps between checkpoint = 50
+end
