@@ -99,7 +99,7 @@ subsection Postprocess
   end
 
   subsection Depth average
-    set List of output variables = temperature, velocity magnitude, artificial viscosity
+    set List of output variables = temperature, velocity magnitude
     set Number of zones = 22
     set Time between graphical output = 5e10
     set Output format                 = txt

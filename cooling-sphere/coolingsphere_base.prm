@@ -1,14 +1,23 @@
 # A simple setup for convection in a 3d shell. See the
 # manual for more information.
 
+
 set Dimension                              = 3
 set Use years in output instead of seconds = true
-set End time                               = 1e10
-set Output directory                       = output-shell_simple_3d-e6af77b
-set Resume computation = false
+set End time                               = 2e11
+set Output directory                       = output-coolingsphere-ASPECTVER-grREFINEMENT
+
+subsection Discretization
+#  set Use discontinuous temperature discretization = true
+#  subsection Stabilization parameters
+#    set beta = 0
+#    set cR = 0
+#  end
+end
+
 
 set Use conduction timestep = true
-set Maximum time step = 1e7
+#set Maximum time step = 1e6
 
 subsection Material model
   set Model name = simple
@@ -28,10 +37,12 @@ subsection Geometry model
   end
 end
 
+
 subsection Boundary velocity model
   set Zero velocity boundary indicators       = bottom
   set Tangential velocity boundary indicators = top
 end
+
 
 subsection Boundary temperature model
   set Fixed temperature boundary indicators   = top, bottom
@@ -43,20 +54,25 @@ subsection Boundary temperature model
   end
 end
 
+
 subsection Initial temperature model
   set Model name = function
   subsection Function
-    set Function expression = 1.473e3
+    set Function expression = 1973
   end
 end
 
+
 subsection Gravity model
-  set Model name = ascii data
+  set Model name = radial constant
+  subsection Radial constant
+  set Magnitude = 0.0
+end
 end
 
 
 subsection Mesh refinement
-  set Initial global refinement          = 3
+  set Initial global refinement          = REFINEMENT
   set Initial adaptive refinement        = 0
   set Strategy                           = thermal energy density, minimum refinement function
   set Time steps between mesh refinement = 0
@@ -74,17 +90,18 @@ subsection Postprocess
   set List of postprocessors = visualization, velocity statistics, temperature statistics, heat flux statistics, depth average
 
   subsection Visualization
+    set List of output variables = artificial viscosity
     set Interpolate output = true
     set Write in background thread = true
     set Output format                 = vtu
-    set Time between graphical output = 5e6
+    set Time between graphical output = 5e10
     set Number of grouped files       = 0
   end
 
   subsection Depth average
     set List of output variables = temperature, velocity magnitude
     set Number of zones = 22
-    set Time between graphical output = 5e6
+    set Time between graphical output = 5e10
     set Output format                 = txt
   end
 end
