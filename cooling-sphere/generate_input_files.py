@@ -3,7 +3,7 @@ import subprocess
 # Make a list of aspect versions
 aspect_versions = ['aspect-head','aspect-e6af77b']
 tasks_per_node = 64
-refinement_table = [[3,1],[4,2],[5,4]] # each entry is [refinement,number of nodes]
+refinement_table = [[3,1],[4,2],[5,8]] # each entry is [refinement,number of nodes]
 
 for aspect in aspect_versions:
     for refinement,nnode in refinement_table:
