@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p high2
-#SBATCH -n 64
+#SBATCH -n 512
 #SBATCH --exclusive
 #SBATCH --ntasks-per-node=64
 #SBATCH --job-name=shell_simple_3d
@@ -10,4 +10,4 @@
 #SBATCH --switches=1
 #
 
-mpirun -n 64 --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader --report-bindings ./aspect shell_simple_3d.prm
+mpirun -n 512 --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader --report-bindings ./aspect shell_simple_3d.prm
