@@ -17,6 +17,8 @@ for aspect in aspect_versions:
         table['NCPU']="{:d}".format(int(nnode*tasks_per_node))
         table['PRMFILE']=prm_filename
         table['REFINEMENT']="{:d}".format(refinement)
+        table['JOBNAME']=prm_filename
+        table['TASKS_PER_NODE']="{:d}".format(tasks_per_node)
                 
         subprocess.run(["cp","convection_base.prm",prm_filename])
         subprocess.run(["cp","convection_base.slurm",slurm_filename])

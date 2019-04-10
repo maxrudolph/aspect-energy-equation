@@ -3,12 +3,12 @@
 
 set Dimension                              = 3
 set Use years in output instead of seconds = true
-set End time                               = 5e10
-set Output directory                       = output-shell_simple_3d-e6af77b
+set End time                               = 2e10
+set Output directory                       = output-shell_simple_3d_ASPECTVER_REFINEMENT
 set Resume computation = false
 
 set Use conduction timestep = true
-#set Maximum time step = 1e7
+set Maximum time step = 1e7
 
 subsection Material model
   set Model name = simple
@@ -62,7 +62,7 @@ subsection Mesh refinement
   set Time steps between mesh refinement = 0
   set Refinement fraction = 1.0
   set Coarsening fraction = 0.0
-  set Additional refinement times = 1.1e10, 1.3e10,1.5e10
+  set Additional refinement times = 1.0e10, 1.25e10, 1.5e10
 #  subsection Minimum refinement function
 #     set Coordinate system = depth
 #     set Variable names = d
@@ -79,14 +79,14 @@ subsection Postprocess
     set Interpolate output = true
     set Write in background thread = true
     set Output format                 = vtu
-    set Time between graphical output = 5e6
+    set Time between graphical output = 1e8
     set Number of grouped files       = 0
   end
 
   subsection Depth average
     set List of output variables = temperature, velocity magnitude
     set Number of zones = 22
-    set Time between graphical output = 5e6
+    set Time between graphical output = 1e7
     set Output format                 = txt
   end
 end
