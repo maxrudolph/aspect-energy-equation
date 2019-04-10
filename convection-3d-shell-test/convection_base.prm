@@ -44,9 +44,13 @@ subsection Boundary temperature model
 end
 
 subsection Initial temperature model
-  set Model name = function
-  subsection Function
-    set Function expression = 1.473e3
+  set Model name = harmonic perturbation
+  subsection Harmonic perturbation
+    set Lateral wave number one = 4
+    set Lateral wave number two = 4
+    set Magnitude = 10.0
+    set Reference temperature = 1473.0
+    set Vertical wave number = 1
   end
 end
 

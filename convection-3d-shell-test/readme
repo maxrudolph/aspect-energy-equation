@@ -1,3 +1,11 @@
+# This folder contains files to run thermal convection tests with different aspect versions.
+generate_input_files.py - generates the input files (.prm and .slurm)
+after this, manually submit the slurm files
+
+The models are set up to run on the peloton-II cluster at UC Davis with 64 tasks per node.
+I use an initial global refinement of 3, and the mesh is refined uniformly to refinement levels 4, 5 after 10, 12.5, and 15 bilion years. I suspect that wee may run out of memory at refinement 6, but it's worth trying.
+
+## OLD, OUTDATED STUFF
 step-0 was the initial case, which was run at grid 3 for 5 Gyr.
 step-1 turns off stabilization
 step-2 turns stabilization back on but doubles the resolution after 5 Gyr and runs on 400 processors
