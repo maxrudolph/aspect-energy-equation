@@ -39,11 +39,11 @@ def linestyle(filename):
         style += 'k'
     else:
         style += 'r'
-    if( filename.find('_3') != -1 ):
+    if( filename.find('gr3') != -1 ):
         style += '-'
-    elif( filename.find('_4') != -1 ):
+    elif( filename.find('gr4') != -1 ):
         style +=  '.'
-    elif( filename.find('_5') != -1):
+    elif( filename.find('gr5') != -1):
         style += '--'
     return style
 
@@ -53,18 +53,14 @@ for file in files:
     depth_averages.append( load_depthaverage(file) )
 
 plt.figure(figsize=(8,8))
-
-tplot=2.5e9
-
 for da in depth_averages:
     # select only the entries corresponding to the last time.
     times = np.unique(da['time'])
-    idx = np.argmin(np.abs(times-tplot))
-    pmask = da['time'] == times[idx]
+    pmask = da['time'] == times[-1]
     style = linestyle( da['label'] )
-    plt.plot(ro-da['depth'][pmask],da['temperature'][pmask],style,label=da['label'] + ', time ={:e}'.format(times[idx]))
+    plt.plot(ro-da['depth'][pmask],da['temperature'][pmask],style,label=da['label'] + ', time ={:e}'.format(times[i]))
 
-
+plt.plot(r,T,'g+',label='analytic')
 
 plt.legend()
 plt.savefig('T_vs_r.eps')
@@ -75,13 +71,11 @@ print("Thermal diffusion timescale {:e} years".format((ro-ri)**2/(1e-6)/3.15e7))
 
 def load_statistics(filename):
     s=dict()
-    sol = np.loadtxt(filename,usecols=(1,14,17,18,4,11),unpack=False)
+    sol = np.loadtxt(filename,usecols=(1,14,17,18),unpack=False)
     s['time']=sol[:,0]
     s['Tavg']=sol[:,1]
     s['qbtm']=sol[:,2]
     s['qsurf']=sol[:,3]
-    s['ndof']=sol[:,4]
-    s['vrms']=sol[:,5]
     s['label']=filename
     return s
 
@@ -91,26 +85,23 @@ for file in files:
     statistics.append( load_statistics(file) )
 
 
-f,(ax1,ax2,ax3,ax4,ax5) = plt.subplots(5,1)
-f.set_size_inches([8,20])
+f,(ax1,ax2) = plt.subplots(1,2)
+f.set_size_inches([16,8])
 for s in statistics:
-    ax1.plot(s['time'],-s['qbtm'],linestyle(s['label']),label=s['label']+' CMB HF')
-    ax1.plot(s['time'],s['qsurf'],linestyle(s['label']),label=s['label']+' SURF HF') 
-    ax2.plot(s['time'],(s['qsurf']- -s['qbtm'])/s['qsurf'],linestyle(s['label']),label=s['label']+' fractional imbalance' )
-    ax3.plot(s['time'],s['ndof'],linestyle(s['label']),label=s['label'])
-    ax4.plot(s['time'],s['Tavg'],linestyle(s['label']),label=s['label'])
-    ax5.plot(s['time'],s['vrms'],linestyle(s['label']),label=s['label'])
+    ax1.plot(s['time'],-s['qbtm'],linestyle(s['label']),label=s['label'])
+    ax2.plot(s['time'],s['qsurf'],linestyle(s['label']),label=s['label']) 
+    
 
+ax1.plot([0,2e11],[-qcmb,-qcmb],label='Analytic')
+ax1.set_ylim([0,1e12])
+ax1.set_xlim([0, 2e11])
 ax1.set_ylabel('Heat Flow (W)')
 ax1.set_xlabel('time (year)')
-ax3.set_ylabel('# Stokes DOF')
-ax4.set_ylabel('Average Temperature')
-ax5.set_ylabel('RMS velocity')
-ax1.legend()
+
+ax2.plot([0,2e11],[-qcmb,-qcmb],label='Analytic')
+ax2.set_ylim([0,1e12])
+ax2.set_xlim([0,2e11])
 ax2.legend()
-ax3.legend()
-ax4.legend()
-ax5.legend()
 plt.savefig('heat_flow_vs_time.eps')
 plt.savefig('heat_flow_vs_time.png')
 plt.show()
