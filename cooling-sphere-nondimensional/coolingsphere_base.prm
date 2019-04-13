@@ -6,6 +6,7 @@ set Dimension                              = 3
 set Use years in output instead of seconds = false
 set End time                               = 1.0
 set Output directory                       = output-coolingsphere-ASPECTVER-grREFINEMENT
+set CFL number = 0.5
 
 subsection Discretization
 #  set Use discontinuous temperature discretization = true
@@ -19,12 +20,16 @@ end
 set Use conduction timestep = true
 #set Maximum time step = 1e6
 
-subsection Material model
-  set Model name = nondimensional
 
-  subsection Nondimensional model
-    set Ra = 1.0
-    set Di = 0.0
+subsection Material model
+  set Model name = simpler
+  subsection Simpler model
+    set Reference density             = 1
+    set Reference specific heat       = 1.
+    set Reference temperature         = 0
+    set Thermal conductivity          = 1
+    set Thermal expansion coefficient = 1e-6
+    set Viscosity                     = 1
   end
 end
 
@@ -94,7 +99,7 @@ subsection Postprocess
     set Interpolate output = true
     set Write in background thread = true
     set Output format                 = vtu
-    set Time between graphical output = 5e10
+    set Time between graphical output = 0.1
     set Number of grouped files       = 0
   end
 
