@@ -4,7 +4,7 @@
 
 set Dimension                              = 3
 set Use years in output instead of seconds = false
-set End time                               = 1.0
+set End time                               = 0.2
 set Output directory                       = output-coolingsphere-ASPECTVER-grREFINEMENT
 set CFL number = 0.5
 
