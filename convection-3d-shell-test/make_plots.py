@@ -42,7 +42,7 @@ def linestyle(filename):
     if( filename.find('_3') != -1 ):
         style += '-'
     elif( filename.find('_4') != -1 ):
-        style +=  '.'
+        style +=  ':'
     elif( filename.find('_5') != -1):
         style += '--'
     return style
@@ -103,6 +103,7 @@ for s in statistics:
 
 ax1.set_ylabel('Heat Flow (W)')
 ax1.set_xlabel('time (year)')
+ax2.set_ylabel('|(qsurf-qcmb)|/qsurf')
 ax3.set_ylabel('# Stokes DOF')
 ax4.set_ylabel('Average Temperature')
 ax5.set_ylabel('RMS velocity')
