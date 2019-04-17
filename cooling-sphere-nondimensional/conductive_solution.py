@@ -47,7 +47,7 @@ def linestyle(filename):
         style += '--'
     return style
 
-files = glob.glob('results/depth_average*.txt')
+files = sorted(glob.glob('results/depth_average*.txt'))
 depth_averages=[]
 for file in files:
     depth_averages.append( load_depthaverage(file) )
@@ -96,13 +96,13 @@ for s in statistics:
 
 ax1.plot([0,1],[-qcmb,-qcmb],label='Analytic')
 ax1.set_ylim([0,100])
-#ax1.set_xlim([0,1])
+ax1.set_xlim([0,0.2])
 ax1.set_ylabel('Heat Flow (-)')
 ax1.set_xlabel('time (year)')
 
 ax2.plot([0,1],[-qcmb,-qcmb],label='Analytic')
 ax2.set_ylim([0,100])
-#ax2.set_xlim([0,1])
+ax2.set_xlim([0,0.2])
 ax2.legend()
 plt.savefig('heat_flow_vs_time.eps')
 plt.savefig('heat_flow_vs_time.png')
