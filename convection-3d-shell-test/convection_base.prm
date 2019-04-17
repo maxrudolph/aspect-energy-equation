@@ -10,6 +10,10 @@ set Resume computation = false
 set Use conduction timestep = true
 set Maximum time step = 1e7
 
+subsection Formulation
+  set Formulation = Boussinesq approximation
+end
+
 subsection Material model
   set Model name = simple
 
