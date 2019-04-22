@@ -3,7 +3,7 @@
 set Dimension                              = 3
 set Use years in output instead of seconds = true
 set End time                               = 1.5e8
-set Output directory                       = output-convection-plates-spinup-gr4
+set Output directory                       = output-convection-plates-spinup-ASPECTVER-grREFINEMENT
 set Adiabatic surface temperature          = 1250.0
 set Resume computation = false
 set Use conduction timestep		   = true
@@ -16,7 +16,7 @@ subsection Solver parameters
 end
 
 subsection Checkpointing
-  set Steps between checkpoint = 250
+  set Steps between checkpoint = 50
 end
 
 subsection Formulation
@@ -178,7 +178,7 @@ end
 
 subsection Mesh refinement
   set Initial adaptive refinement        = 0
-  set Initial global refinement          = 4
+  set Initial global refinement          = REFINEMENT
   set Strategy                           = strain rate, thermal energy density, viscosity, composition approximate gradient
   set Time steps between mesh refinement = 0
 end
