@@ -10,6 +10,7 @@ Created on Mon Aug 27 16:42:42 2018
 import numpy as np
 import matplotlib.pyplot as plt
 import glob as glob
+from scipy.integrate import cumtrapz
 
 ri = 3481000.
 ro = 6336000.
@@ -21,7 +22,11 @@ r = np.linspace(ri,ro)
 T = c1/r+c2
 dtdr_cmb = -c1/ri**2
 kThermal = 4.7
+Cp = 1250.
+rho = 3300.
+mantle_heat_capacity = 4./3.*np.pi*(ro**3-ri**3) * rho*Cp
 qcmb = 4.*np.pi*ri**2 * kThermal *dtdr_cmb
+seconds_in_year = 60*60*24*365.2425 # from global.cc in aspect
 
 
 def load_depthaverage(filename):
@@ -54,7 +59,7 @@ for file in files:
 
 plt.figure(figsize=(8,8))
 
-tplot=2.5e9
+tplot=1.0e9
 
 for da in depth_averages:
     # select only the entries corresponding to the last time.
@@ -85,7 +90,7 @@ def load_statistics(filename):
     s['label']=filename
     return s
 
-files = glob.glob('results/statistics*')
+files = sorted(glob.glob('results/statistics*'))
 statistics = []
 for file in files:
     statistics.append( load_statistics(file) )
@@ -106,6 +111,7 @@ ax1.set_ylabel('Surface Heat Flow (W)')
 ax1.set_xlabel('time (year)')
 ax0.set_xlabel('time (year)')
 ax2.set_ylabel('|(qsurf-qcmb)|/qsurf')
+ax2.set_yscale('log')
 ax3.set_ylabel('# Stokes DOF')
 ax4.set_ylabel('Average Temperature')
 ax5.set_ylabel('RMS velocity')
@@ -120,3 +126,21 @@ plt.savefig('heat_flow_vs_time.png')
 plt.show()
 
 
+# calculate average heat fluxes over least gyr
+print('Markdown table follows:')
+print('| Model | averaging period (yr) | Qsurf (W) | Qcmb (W) | Qsecular  (W) | imbalance/Qcmb |')
+for s in statistics:
+    target_averaging_time = 1.0e9
+    last_time = s['time'][-1]
+    averaging_start = np.argmin( np.abs(s['time']-(last_time-target_averaging_time)))
+    averaging_time = last_time-s['time'][averaging_start]
+    
+
+    qbar_cmb = -1./averaging_time * cumtrapz(s['qbtm'][averaging_start:],s['time'][averaging_start:])[-1]
+
+    qbar_surf = 1./averaging_time * cumtrapz(s['qsurf'][averaging_start:],s['time'][averaging_start:])[-1]
+
+    qbar_secular_cooling = (s['Tavg'][-1]-s['Tavg'][averaging_start])/(averaging_time*seconds_in_year) * mantle_heat_capacity
+    imbalance=(qbar_cmb-(qbar_surf+qbar_secular_cooling))/np.abs(qbar_cmb)
+    
+    print('|'+s['label']+'|{:.2e}|{:.2e}|{:.2e}|{:.2e}|{:.2e}|'.format(averaging_time,qbar_surf,qbar_cmb,qbar_secular_cooling,imbalance))
