@@ -5,7 +5,7 @@ set Use years in output instead of seconds = true
 set End time                               = 1.5e8
 set Output directory                       = output-convection-plates-spinup-gr4
 set Adiabatic surface temperature          = 1250.0
-set Resume computation = true
+set Resume computation = false
 set Use conduction timestep		   = true
 
 subsection Solver parameters
