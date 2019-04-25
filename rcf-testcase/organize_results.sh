@@ -1,6 +1,6 @@
 #!/bin/bash
 mkdir results
-for file in output-*_?
+for file in output-*
 do
 echo $file
 j=`echo $file | cut -d _ -f 4-5`
