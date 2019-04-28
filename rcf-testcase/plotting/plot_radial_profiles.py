@@ -25,7 +25,7 @@ def load_depthaverage(filename):
     da['time'] = depth_averages[:,0]
     da['temperature'] = depth_averages[:,2]
     da['depth'] = depth_averages[:,1]
-    da['label'] = filename
+    da['label'] = filename[filename.find('aspect'):]
     return da
 
 files = sorted(glob.glob('../results/depth_average*.txt'))
@@ -43,7 +43,7 @@ citcoms_T = citcoms_data[:,1]*2500.
 
 plt.figure()
 for da in depth_averages:
-    target_time = 3.6e7;
+    target_time = 1.5e8;
     times = np.unique(da['time']);
     ii=np.argmin(np.abs(times-target_time))
     pmask = da['time'] == times[ii]
