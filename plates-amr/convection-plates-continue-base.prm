@@ -1,0 +1,206 @@
+# Based on rcf-step_amr.prm
+
+set Dimension                              = 3
+set Use years in output instead of seconds = true
+set End time                               = 6.08e8
+set Output directory                       = output-convection-plates-continue-ASPECTVER-grREFINEMENT
+set Adiabatic surface temperature          = 1250.0
+set Resume computation = true
+set Use conduction timestep		   = true
+
+subsection Solver parameters
+  subsection Stokes solver parameters
+    set Number of cheap Stokes solver steps    = 200  
+    set GMRES solver restart length            = 100
+  end
+end
+
+subsection Checkpointing
+  set Steps between checkpoint = 500
+end
+
+subsection Formulation
+  set Formulation = Boussinesq approximation
+end
+
+subsection Discretization
+  set Stokes velocity polynomial degree = 2
+  set Use locally conservative discretization = false
+  set Use discontinuous temperature discretization = false
+
+  # settings for compositional field
+  set Use discontinuous composition discretization = true
+  subsection Stabilization parameters
+    # set entropy viscosity stabilization parameters to zero to avoid
+    # numerical diffusion owing to lowish resoltion
+    set Global composition maximum = 1.0
+    set Global composition minimum = 0.0
+    #set Use SUPG = true
+
+    set Use limiter for discontinuous composition solution = true
+  end
+end
+
+
+subsection Termination criteria
+   set End step = 5
+   set Checkpoint on termination = true
+   set Termination criteria = end time, user request
+end
+
+subsection Compositional fields
+  set Number of fields = 1
+end
+
+# The material model for this setup is somewhat complicated.
+# An additional factor of 10 is added to the reference viscosity for the lithosphere.
+subsection Material model
+  set Model name = depth dependent
+  subsection Depth dependent model
+    set Base model = simple
+    set Depth dependence method = File
+    set Viscosity depth file = viscosity_profile_fesd_case05.txt
+  end
+  subsection Simple model
+    set Thermal expansion coefficient = 3.0e-5
+    set Viscosity = 1.0e22
+    set Reference temperature = 1250.0
+    set Reference density = 3300.0
+    set Thermal conductivity = 4.125    
+    set Reference specific heat = 1250.0
+
+    # 4.60517 gives 4 orders of magnitude temperature dependence
+    set Thermal viscosity exponent = 4.60517
+    
+    # Density differential for active compositional field 1
+    # 82.5 is 2.5% of 3300
+    # 103.125 is 3.125% of 3300
+    # 123.75 is 3.75% of 3300
+    # 144.375 is 4.375% of 3300
+    # 148.5 gives B=0.6
+    set Density differential for compositional field 1 = 148.5
+    set Composition viscosity prefactor = 1.0
+  end
+  set Material averaging = harmonic average
+end
+
+subsection Heating model
+  set List of model names = constant heating
+  subsection Constant heating 
+    # in (W/kg) For rho=3300, H=4.33e-12 W/kg should yield 13 TW radiogenic heating
+    set Radiogenic heating rate = 7.6990087e-12
+  end
+end
+
+
+subsection Geometry model
+  set Model name = spherical shell
+
+  subsection Spherical shell
+    set Inner radius  = 3.50405e6
+    set Outer radius  = 6.37100e6
+  end
+end
+
+
+# The parameters below this comment were created by the update script
+# as replacement for the old 'Model settings' subsection. They can be
+# safely merged with any existing subsections with the same name.
+
+subsection Boundary velocity model
+  set Prescribed velocity boundary indicators = top:gplates
+  set Tangential velocity boundary indicators = bottom
+end
+
+subsection Boundary velocity model
+  subsection GPlates model   
+    set Data directory = ZZ+S200/
+    set Velocity file name = velo_ZZ+S200_%03d.gpml
+    set Data file time step = 1.0e6
+    set First data file number = 458
+    set Decreasing file order = true
+    set First data file model time = 1.5e8
+  end
+end
+
+#subsection Boundary velocity model
+#  subsection GPlates model   
+#    set Data directory = Matthews_etal_2016/
+#    set Velocity file name = matthews_%03dMa.gpml
+#    set Data file time step = 1e6
+#    set First data file number = 409
+#    set Decreasing file order = true
+#    set First data file model time = 0
+#  end
+#end
+
+
+subsection Boundary temperature model
+  set Fixed temperature boundary indicators = inner, outer
+  set List of model names = spherical constant
+  subsection Spherical constant
+    set Inner temperature = 2500 
+    set Outer temperature = 0 
+  end
+end
+
+
+subsection Initial temperature model
+  set Model name = ascii profile
+  subsection Ascii profile
+    set Data directory = ./
+    set Data file name = initial_profile.txt
+  end
+end
+
+subsection Initial composition model
+  set Model name = function
+  subsection Function
+    set Coordinate system = depth
+    set Variable names    = d, dummy1, dummy2
+    #2717 km corresponds to initial thickness of 150 km
+    #2617 km corresponds to initial thickness of 250 km
+    #2567 km corresponds to initial thickness of 300 km, 5.6% mantle volume
+    set Function expression = if( d >= 2.617e6 , 1, 0 )
+  end
+end
+
+
+
+subsection Gravity model
+  set Model name = radial constant
+
+  subsection Radial constant
+    set Magnitude = 10
+  end
+end
+
+
+subsection Mesh refinement
+  set Initial adaptive refinement        = 0
+  set Initial global refinement          = REFINEMENT
+  set Strategy                           = strain rate, thermal energy density, viscosity, composition approximate gradient
+  set Time steps between mesh refinement = 0
+end
+
+
+subsection Postprocess
+  set List of postprocessors = visualization, velocity statistics, temperature statistics, heat flux statistics, depth average
+
+  subsection Visualization
+    set Filter output = true
+    set Interpolate output = true
+    set List of output variables      = viscosity, strain rate, compositional vector, temperature anomaly, artificial viscosity
+    set Output format                 = hdf5
+    set Time between graphical output = 1e6
+    set Number of grouped files       = 32
+    set Write in background thread = true
+  end
+
+  subsection Depth average
+    set List of output variables = temperature, composition, velocity magnitude, viscosity
+    set Number of zones = 45
+    set Time between graphical output = 2.5e7
+    set Output format = txt
+  end
+end

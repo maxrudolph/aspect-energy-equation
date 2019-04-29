@@ -1,0 +1,11 @@
+# These are supplemental options for the zeroth timestep
+subsection Termination criteria
+	   set End step = 0
+	   set Termination criteria = end step
+	   set Checkpoint on termination = true
+end
+
+subsection Mesh refinement
+	   set Refinement fraction = 0.95
+	   set Coarsening fraction = 0.0
+end

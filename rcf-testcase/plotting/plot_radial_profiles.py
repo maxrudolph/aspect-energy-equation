@@ -73,13 +73,14 @@ for ii in range(len(citcoms_da)):
 citcoms_file_tyr = np.array(citcoms_file_tyr)
 
 
-def comparison_figure(target_time):
+def comparison_figure(target_time,thresh=1e7):
     plt.figure()
     for da in depth_averages:
         times = np.unique(da['time']);
         ii=np.argmin(np.abs(times-target_time))
-        pmask = da['time'] == times[ii] 
-        plt.plot( da['temperature'][pmask],da['depth'][pmask] ,label=da['label']+' {:.0f} Myr'.format(times[ii]/1e6))
+        pmask = da['time'] == times[ii]
+        if(np.abs(times[ii]-target_time)<=thresh):
+            plt.plot( da['temperature'][pmask],da['depth'][pmask] ,label=da['label']+' {:.0f} Myr'.format(times[ii]/1e6))
     ii = np.argmin(np.abs(citcoms_file_tyr-target_time))
     plt.plot(citcoms_da[ii]['temperature'],citcoms_da[ii]['depth'],label='citcoms {:.0f} Myr'.format(citcoms_file_tyr[ii]/1e6))
     plt.legend()
@@ -89,6 +90,6 @@ def comparison_figure(target_time):
     plt.show()
     
 comparison_figure(0)
-comparison_figure(0.74aae8)
+comparison_figure(0.74e8)
 comparison_figure(1.5e8)
-comparison_figure(2.5e8)
+comparison_figure(2.56e8,thresh=1e7)
