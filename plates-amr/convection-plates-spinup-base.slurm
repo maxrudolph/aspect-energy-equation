@@ -18,5 +18,5 @@ cat timestep_zero.prm >> convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.
 
 time mpirun -n NCPU ./ASPECTVER convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.prm
 
-#time mpirun -n NCPU --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader ./ASPECTVER convection-plates-spinup_ASPECTVER_amrREFINEMENT.prm
+time mpirun -n NCPU ./ASPECTVER convection-plates-spinup_ASPECTVER_amrREFINEMENT.prm
 

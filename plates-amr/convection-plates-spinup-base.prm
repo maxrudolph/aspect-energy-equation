@@ -16,7 +16,7 @@ subsection Solver parameters
 end
 
 subsection Checkpointing
-  set Steps between checkpoint = 50
+  set Steps between checkpoint = 200
 end
 
 subsection Formulation
@@ -114,7 +114,7 @@ end
 
 subsection Boundary velocity model
   subsection GPlates model   
-    set Data directory = ../rcf_testcase/ZZ+S200/
+    set Data directory = ../rcf-testcase/ZZ+S200/
     set Velocity file name = velo_ZZ+S200_458.gpml
     #set Data file time step = 1.5e8
     #set First data file number = 409
@@ -179,7 +179,7 @@ end
 subsection Mesh refinement
   set Initial adaptive refinement        = REFINEMENT
   set Initial global refinement          = 3
-  set Strategy                           = composition approximate gradient, temperature gradient, artificial viscosity
+  set Strategy                           = composition approximate gradient, temperature, artificial viscosity
   subsection Artificial viscosity
      set Temperature scaling factor = 1.0
      set Compositional field scaling factors = 1.0
@@ -197,7 +197,7 @@ subsection Postprocess
     set List of output variables      = viscosity, strain rate, compositional vector, temperature anomaly, artificial viscosity
     set Output format                 = hdf5
     set Time between graphical output = 1e6
-    set Number of grouped files       = 32
+    set Number of grouped files       = 0
     set Write in background thread = true
   end
 
