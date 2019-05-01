@@ -9,3 +9,4 @@ subsection Mesh refinement
 	   set Refinement fraction = 0.95
 	   set Coarsening fraction = 0.0
 end
+set Resume computation = false

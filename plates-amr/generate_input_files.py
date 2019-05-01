@@ -4,7 +4,7 @@ import subprocess
 aspect_versions = ['aspect-head','aspect-e6af77b']
 tasks_per_node = 20
 # for coeus, probably 
-refinement_table = [[2,16],[3,50]] # each entry is [refinement,number of nodes]
+refinement_table = [[2,25],[3,50]] # each entry is [refinement,number of nodes]
 parts=['spinup','continue']
 for part in parts:
     for aspect in aspect_versions:

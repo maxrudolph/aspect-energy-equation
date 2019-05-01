@@ -7,7 +7,7 @@
 #SBATCH --time=4-00:00:00
 #SBATCH --switches=1
 #
-module load impi gcc-8.2.0
+module load impi gcc-6.3.0
 
 #module load impi local-gcc-6.3.0
 #
