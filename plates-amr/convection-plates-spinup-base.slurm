@@ -7,10 +7,7 @@
 #SBATCH --time=4-00:00:00
 #SBATCH --switches=1
 #
-module load impi gcc-6.3.0
-
-#module load impi local-gcc-6.3.0
-#
+module load impi gcc-7.2.0
 
 # Make the 0th timestep slurm file
 cat convection-plates-spinup_ASPECTVER_amrREFINEMENT.prm > convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.prm
