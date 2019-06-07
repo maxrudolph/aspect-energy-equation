@@ -7,7 +7,7 @@
 #SBATCH --time=4-00:00:00
 #SBATCH --switches=1
 #
-module unload openmpi
+#module unload openmpi
 
 #module load impi local-gcc-6.3.0
 #
