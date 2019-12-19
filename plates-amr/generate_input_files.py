@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import subprocess
 # Make a list of aspect versions
-aspect_versions = ['aspect-head','aspect-e6af77b']
-tasks_per_node = 20
-# for coeus, probably 
-refinement_table = [[2,25],[3,50]] # each entry is [refinement,number of nodes]
+aspect_versions = ['aspect-head',]
+tasks_per_node = 32
+# for coeus, probably
+# refinement here is the initial adaptive refinement. initial global refinement is 3 for all cases.
+refinement_table = [[2,8]] # each entry is [refinement,number of nodes]
 parts=['spinup','continue']
 for part in parts:
     for aspect in aspect_versions:

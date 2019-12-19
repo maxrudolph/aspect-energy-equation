@@ -10,13 +10,14 @@ set Use conduction timestep		   = true
 
 subsection Solver parameters
   subsection Stokes solver parameters
+    set Stokes solver type = block GMG
     set Number of cheap Stokes solver steps    = 200  
     set GMRES solver restart length            = 100
   end
 end
 
 subsection Checkpointing
-  set Steps between checkpoint = 500
+  set Steps between checkpoint = 200
 end
 
 subsection Formulation
@@ -35,7 +36,7 @@ subsection Discretization
     # numerical diffusion owing to lowish resoltion
     set Global composition maximum = 1.0
     set Global composition minimum = 0.0
-    #set Use SUPG = true
+    set Stabilization method = SUPG
 
     set Use limiter for discontinuous composition solution = true
   end
@@ -191,9 +192,9 @@ subsection Postprocess
     set Filter output = true
     set Interpolate output = true
     set List of output variables      = viscosity, strain rate, compositional vector, temperature anomaly, artificial viscosity
-    set Output format                 = hdf5
+    set Output format                 = vtu
     set Time between graphical output = 1e6
-    set Number of grouped files       = 32
+    set Number of grouped files       = 0
     set Write in background thread = true
   end
 
