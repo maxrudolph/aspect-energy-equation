@@ -60,6 +60,7 @@ subsection Material model
   subsection Depth dependent model
     set Base model = simple
     set Depth dependence method = File
+    set Data directory = ./
     set Viscosity depth file = viscosity_profile_fesd_case05.txt
   end
   subsection Simple model

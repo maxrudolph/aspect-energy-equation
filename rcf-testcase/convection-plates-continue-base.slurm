@@ -7,9 +7,10 @@
 #SBATCH --time=4-00:00:00
 #SBATCH --switches=1
 #
-module unload openmpi
-
+#module unload openmpi
+module load slurm
+module load openmpi/4.1.0-mpi-io
 #module load impi local-gcc-6.3.0
 #
-time mpirun -n NCPU --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader ./ASPECTVER convection-plates-continue_ASPECTVER_grREFINEMENT.prm
+time mpirun -n NCPU ./ASPECTVER convection-plates-continue_ASPECTVER_grREFINEMENT.prm
 

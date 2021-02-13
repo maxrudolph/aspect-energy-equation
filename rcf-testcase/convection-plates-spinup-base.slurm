@@ -11,5 +11,7 @@
 
 #module load impi local-gcc-6.3.0
 #
-time mpirun -n NCPU --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader ./ASPECTVER convection-plates-spinup_ASPECTVER_grREFINEMENT.prm
+module load slurm
+module load openmpi/4.1.0-mpi-io
+time mpirun -n NCPU ./ASPECTVER convection-plates-spinup_ASPECTVER_grREFINEMENT.prm
 

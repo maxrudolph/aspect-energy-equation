@@ -8,8 +8,12 @@
 #SBATCH --switches=1
 #
 module unload openmpi
-
+export PATH=/home/rudolph/sw/openmpi-4.0.2/bin:$PATH
 #module load impi local-gcc-6.3.0
 #
-time mpirun -n NCPU --bind-to hwthread --mca btl_openib_allow_ib 1 --mca btl openib,self,vader ./ASPECTVER convection-plates-continue_ASPECTVER_grREFINEMENT.prm
+time mpirun -n NCPU \
+	--bind-to core \
+	--mca btl_openib_allow_ib 1 \
+	--mca btl openib,self,vader \
+	./ASPECTVER convection-plates-continue_ASPECTVER_grREFINEMENT.prm
 

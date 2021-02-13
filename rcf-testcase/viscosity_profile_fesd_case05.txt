@@ -1,4 +1,6 @@
-Depth (m) Viscosity (Pa-s)
+# POINTS: 310
+# Columns: Depth (m) Viscosity (Pa-s)
+depth viscosity
 0.000000e+00 3.200133e+21
 1.000000e+04 3.200133e+21
 2.000000e+04 3.200133e+21

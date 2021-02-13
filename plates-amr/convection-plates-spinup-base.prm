@@ -5,14 +5,18 @@ set Use years in output instead of seconds = true
 set End time                               = 1.5e8
 set Output directory                       = output-convection-plates-spinup-ASPECTVER-amrREFINEMENT
 set Adiabatic surface temperature          = 1250.0
-set Resume computation                     = true
+set Resume computation                     = auto
 set Use conduction timestep		   = true
 
 subsection Solver parameters
   subsection Stokes solver parameters
-    set Stokes solver type = block GMG
-    set Number of cheap Stokes solver steps    = 200  
-    set GMRES solver restart length            = 100
+    set Stokes solver type = block AMG
+    set Use full A block as preconditioner = true
+    set Number of cheap Stokes solver steps    = 100  
+    set GMRES solver restart length            = 200
+  end
+  subsection Advection solver parameters
+    set GMRES solver restart length		= 200
   end
 end
 
@@ -195,7 +199,7 @@ end
 
 
 subsection Postprocess
-  set List of postprocessors = visualization, velocity statistics, temperature statistics, heat flux statistics, depth average
+  set List of postprocessors = visualization, velocity statistics, temperature statistics, heat flux statistics, depth average, heating statistics
 
   subsection Visualization
     set Filter output = true
