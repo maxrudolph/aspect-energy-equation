@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import subprocess
 # Make a list of aspect versions
-aspect_versions = ['aspect-mpiio']
+aspect_versions = ['aspect-maxmpiio']
 tasks_per_node = 32
 refinement_table = [[4,6],] # each entry is [refinement,number of nodes]
 parts=['spinup','continue']

@@ -195,7 +195,8 @@ subsection Postprocess
     set List of output variables      = viscosity, strain rate, compositional vector, temperature anomaly, artificial viscosity
     set Output format                 = hdf5
     set Time between graphical output = 1e6
-    set Number of grouped files       = 32
+    set Number of grouped files       = 0
+    set Temporary output location = /scratch
     set Write in background thread = true
   end
 
