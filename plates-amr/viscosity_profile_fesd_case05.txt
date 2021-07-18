@@ -1,4 +1,7 @@
-Depth (m) Viscosity (Pa-s)
+# Depth-dependence for viscosity
+# POINTS: 310
+# Columns: depth (m), viscosity (Pa.s)
+depth viscosity
 0.000000e+00 3.200133e+21
 1.000000e+04 3.200133e+21
 2.000000e+04 3.200133e+21
