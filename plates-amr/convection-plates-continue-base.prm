@@ -36,7 +36,7 @@ subsection Discretization
     # numerical diffusion owing to lowish resoltion
     set Global composition maximum = 1.0
     set Global composition minimum = 0.0
-    set Stabilization method = SUPG
+    # set Stabilization method = SUPG
 
     set Use limiter for discontinuous composition solution = true
   end
@@ -179,6 +179,7 @@ end
 
 subsection Mesh refinement
   set Initial adaptive refinement        = 0
+  set Minimum refinement legel           = 3
   set Initial global refinement          = REFINEMENT
   set Strategy                           = strain rate, thermal energy density, viscosity, composition approximate gradient
   set Time steps between mesh refinement = 0

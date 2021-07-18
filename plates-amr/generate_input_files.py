@@ -2,7 +2,7 @@
 import subprocess
 # Make a list of aspect versions
 #aspect_versions = ['aspect-903f21714']#['aspect-head','aspect-480e7e00e']
-aspect_versions = ['aspect-head','aspect-timo']
+aspect_versions = ['aspect-mpiio',]
 tasks_per_node = 32
 # for coeus, probably
 # refinement here is the initial adaptive refinement. initial global refinement is 3 for all cases.

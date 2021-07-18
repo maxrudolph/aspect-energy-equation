@@ -10,7 +10,7 @@ set Use conduction timestep		   = true
 
 subsection Solver parameters
   subsection Stokes solver parameters
-    set Stokes solver type = block AMG
+    set Stokes solver type = block GMG
     set Use full A block as preconditioner = true
     set Number of cheap Stokes solver steps    = 100  
     set GMRES solver restart length            = 200
@@ -40,7 +40,7 @@ subsection Discretization
     # numerical diffusion owing to lowish resoltion
     set Global composition maximum = 1.0
     set Global composition minimum = 0.0
-    set Stabilization method = SUPG
+    # set Stabilization method = SUPG
 
     set Use limiter for discontinuous composition solution = true
   end
