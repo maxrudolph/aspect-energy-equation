@@ -10,8 +10,8 @@ set Use conduction timestep		   = true
 
 subsection Solver parameters
   subsection Stokes solver parameters
-    set Stokes solver type = block GMG
-    set Use full A block as preconditioner = true
+    set Stokes solver type = block AMG
+    #set Use full A block as preconditioner = true
     set Number of cheap Stokes solver steps    = 100  
     set GMRES solver restart length            = 200
   end
@@ -64,6 +64,7 @@ subsection Material model
   subsection Depth dependent model
     set Base model = simple
     set Depth dependence method = File
+    set Data directory = ./
     set Viscosity depth file = viscosity_profile_fesd_case05.txt
   end
   subsection Simple model
@@ -205,7 +206,7 @@ subsection Postprocess
     set Filter output = true
     set Interpolate output = true
     set List of output variables      = viscosity, strain rate, compositional vector, temperature anomaly, artificial viscosity
-    set Output format                 = vtu
+    set Output format                 = hdf5
     set Time between graphical output = 1e6
     set Number of grouped files       = 0
     set Write in background thread = true
