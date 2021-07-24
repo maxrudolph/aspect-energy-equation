@@ -186,13 +186,19 @@ subsection Mesh refinement
   set Initial adaptive refinement        = REFINEMENT
   set Initial global refinement          = 3
   #set Strategy                           = composition approximate gradient, temperature, artificial viscosity, viscosity
-  set Strategy                           = composition approximate gradient, temperature, viscosity
+  set Strategy                           = minimum refinement function, artificial viscosity, composition approximate gradient, temperature, viscosity
   
   subsection Artificial viscosity
     set Temperature scaling factor = 1.0
     set Compositional field scaling factors = 1.0
   end
   set Minimum refinement level           = 3
+  subsection Minimum refinement function
+    set Function constants  =
+    set Function expression = if (depth > 2500000,6,if(depth > 660000,4,if(depth > 80000,5,6)))
+    set Variable names      = depth,y,z
+  end
+
   set Refinement fraction                = 0.4
   set Coarsening fraction                = 0.05
   set Time steps between mesh refinement = 3
