@@ -6,7 +6,7 @@ aspect_versions = ['aspect-mpiio',]
 tasks_per_node = 32
 # for coeus, probably
 # refinement here is the initial adaptive refinement. initial global refinement is 3 for all cases.
-refinement_table = [[2,16]] # each entry is [refinement,number of nodes]
+refinement_table = [[2,16],[3,16]] # each entry is [refinement,number of nodes]
 parts=['spinup','continue']
 for part in parts:
     for aspect in aspect_versions:

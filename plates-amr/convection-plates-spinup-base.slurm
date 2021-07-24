@@ -13,7 +13,7 @@ module load openmpi/4.0.5-mpi-io
 cat convection-plates-spinup_ASPECTVER_amrREFINEMENT.prm > convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.prm
 cat timestep_zero.prm >> convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.prm
 
-time mpirun -n NCPU --bind-to-core \
+time mpirun -n NCPU --bind-to core \
 	./ASPECTVER convection-plates-spinup_ASPECTVER_amrREFINEMENT_time0.prm
 
 time mpirun -n NCPU --bind-to core \
