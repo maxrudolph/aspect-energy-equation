@@ -34,11 +34,11 @@ subsection Discretization
   subsection Stabilization parameters
     # set entropy viscosity stabilization parameters to zero to avoid
     # numerical diffusion owing to lowish resoltion
-    set Global composition maximum = 1.0
-    set Global composition minimum = 0.0
+    #set Global composition maximum = 1.0
+    #set Global composition minimum = 0.0
     # set Stabilization method = SUPG
 
-    set Use limiter for discontinuous composition solution = true
+    #set Use limiter for discontinuous composition solution = true
   end
 end
 
